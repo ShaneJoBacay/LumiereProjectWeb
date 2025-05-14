@@ -1,0 +1,1149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lumière Beauty | Luxury Skin Consultations</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-mauve: #e2c7d3;
+            --secondary-cream: #f8f4e9;
+            --accent-gold: #d4af37;
+            --dark-mauve: #c9a6b4;
+        }
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--secondary-cream);
+            color: #555;
+            overflow-x: hidden;
+        }
+        
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.8s ease-in-out;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .gold-text {
+            color: var(--accent-gold);
+        }
+        
+        .gold-border {
+            border-color: var(--accent-gold);
+        }
+        
+        .btn-gold {
+            background: linear-gradient(135deg, var(--accent-gold), #f1d17a);
+            transition: all 0.3s ease;
+        }
+        
+        .btn-gold:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(212, 175, 55, 0.2);
+        }
+        
+        .testimonial-card {
+            transition: all 0.5s ease;
+        }
+        
+        .testimonial-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .service-card:hover .service-overlay {
+            opacity: 1;
+        }
+        
+        .service-overlay {
+            background: rgba(226, 199, 211, 0.9);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .nav-tab:hover {
+            color: var(--accent-gold);
+        }
+        
+        .nav-tab.active {
+            color: var(--accent-gold);
+            border-bottom: 2px solid var(--accent-gold);
+        }
+        
+        .hamburger-menu {
+            display: none;
+        }
+        
+        @media (max-width: 768px) {
+            .desktop-nav {
+                display: none;
+            }
+            
+            .hamburger-menu {
+                display: block;
+            }
+            
+            .mobile-nav {
+                display: none;
+            }
+            
+            .mobile-nav.active {
+                display: flex;
+            }
+        }
+        
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background-color: var(--accent-gold);
+            opacity: 0;
+            z-index: 9999;
+            animation: confettiFall 3s ease-in-out;
+        }
+        
+        @keyframes confettiFall {
+            0% {
+                transform: translateY(-100vh) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        
+        .skin-analysis-preview {
+            background: linear-gradient(135deg, var(--secondary-cream), var(--primary-mauve));
+            border: 1px dashed var(--accent-gold);
+        }
+
+        /* Added styles for consultation form */
+        .skin-type-btn {
+            transition: all 0.2s ease;
+        }
+        
+        .skin-type-btn.selected {
+            background-color: var(--primary-mauve) !important;
+            border-color: var(--accent-gold) !important;
+            color: #555;
+        }
+        
+        .date-btn {
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+        
+        .date-btn:hover {
+            background-color: #f0f0f0;
+        }
+        
+        .date-btn.selected {
+            background-color: var(--accent-gold) !important;
+            color: white !important;
+            font-weight: 600;
+        }
+        
+        .time-btn {
+            transition: all 0.2s ease;
+        }
+        
+        .time-btn.selected {
+            background-color: var(--accent-gold);
+            color: white;
+            border-color: var(--accent-gold);
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <!-- Header with Logo and Navigation -->
+    <header class="bg-white shadow-sm py-4 px-6">
+        <div class="container mx-auto flex justify-between items-center">
+            <div class="flex items-center">
+                <div class="w-12 h-12 rounded-full bg-gradient-to-br from-var(--accent-gold) to-var(--primary-mauve) flex items-center justify-center mr-3">
+                    <span class="text-white text-2xl font-bold">L</span>
+                </div>
+                <h1 class="text-2xl font-bold text-gray-800">Lumière <span class="gold-text">Beauty</span></h1>
+            </div>
+            
+            <!-- Desktop Navigation -->
+            <nav class="desktop-nav hidden md:block">
+                <ul class="flex space-x-8">
+                    <li>
+                        <button class="nav-tab active flex items-center" data-tab="home">
+                            <i class="fas fa-home mr-2"></i> Home
+                        </button>
+                    </li>
+                    <li>
+                        <button class="nav-tab flex items-center" data-tab="services">
+                            <i class="fas fa-spa mr-2"></i> Services
+                        </button>
+                    </li>
+                    <li>
+                        <button class="nav-tab flex items-center" data-tab="consultation">
+                            <i class="fas fa-calendar-check mr-2"></i> Consultation
+                        </button>
+                    </li>
+                    <li>
+                        <button class="nav-tab flex items-center" data-tab="testimonials">
+                            <i class="fas fa-star mr-2"></i> Testimonials
+                        </button>
+                    </li>
+                    <li>
+                        <button class="nav-tab flex items-center" data-tab="contact">
+                            <i class="fas fa-envelope mr-2"></i> Contact
+                        </button>
+                    </li>
+                </ul>
+            </nav>
+            
+            <!-- Mobile Hamburger Menu -->
+            <div class="hamburger-menu md:hidden">
+                <button id="mobile-menu-button" class="text-gray-700 focus:outline-none">
+                    <i class="fas fa-bars text-2xl"></i>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Mobile Navigation (Hidden by default) -->
+        <div id="mobile-nav" class="mobile-nav container mx-auto mt-4 hidden">
+            <ul class="flex flex-col space-y-4">
+                <li>
+                    <button class="nav-tab active w-full text-left py-2 flex items-center" data-tab="home">
+                        <i class="fas fa-home mr-3"></i> Home
+                    </button>
+                </li>
+                <li>
+                    <button class="nav-tab w-full text-left py-2 flex items-center" data-tab="services">
+                        <i class="fas fa-spa mr-3"></i> Services
+                    </button>
+                </li>
+                <li>
+                    <button class="nav-tab w-full text-left py-2 flex items-center" data-tab="consultation">
+                        <i class="fas fa-calendar-check mr-3"></i> Consultation
+                    </button>
+                </li>
+                <li>
+                    <button class="nav-tab w-full text-left py-2 flex items-center" data-tab="testimonials">
+                        <i class="fas fa-star mr-3"></i> Testimonials
+                    </button>
+                </li>
+                <li>
+                    <button class="nav-tab w-full text-left py-2 flex items-center" data-tab="contact">
+                        <i class="fas fa-envelope mr-3"></i> Contact
+                    </button>
+                </li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="container mx-auto py-8 px-4">
+        <!-- Home Tab -->
+        <div id="home" class="tab-content active">
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="md:w-1/2 mb-8 md:mb-0 md:pr-8">
+                    <h2 class="text-4xl md:text-5xl font-bold text-gray-800 mb-4">Your <span class="gold-text">Radiant</span> Skin Journey Begins Here</h2>
+                    <p class="text-lg text-gray-600 mb-6">At Lumière Beauty, we believe in personalized care that reveals your natural glow. Our expert aestheticians combine science and luxury to create bespoke treatments tailored just for you.</p>
+                    <div class="flex space-x-4">
+                        <button class="btn-gold text-white px-6 py-3 rounded-full font-medium" data-tab="consultation">
+                            Book Consultation
+                        </button>
+                        <button class="border-2 gold-border text-gray-700 px-6 py-3 rounded-full font-medium" data-tab="services">
+                            Explore Services
+                        </button>
+                    </div>
+                </div>
+                <div class="md:w-1/2 relative">
+                    <img src="images/Landscape.jpeg" alt="New product of Lumiere" class="rounded-lg shadow-xl w-full h-auto">
+                    <div class="absolute -bottom-4 -right-4 bg-white p-4 rounded-lg shadow-md">
+                        <div class="flex items-center">
+                            <div class="w-12 h-12 rounded-full bg-gray-200 flex items-center justify-center mr-3">
+                                <i class="fas fa-award text-xl gold-text"></i>
+                            </div>
+                            <div>
+                                <p class="text-sm font-medium">Certified Experts</p>
+                                <p class="text-xs text-gray-500">10+ years experience</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-16">
+                <h3 class="text-2xl font-bold text-center mb-8">As Featured In</h3>
+                <div class="flex flex-wrap justify-center items-center gap-8">
+                    <img src="images/vogue.svg" alt="Vogue logo" class="h-8 w-auto opacity-60">
+                    <img src="images/chanel.svg" alt="Chanel logo" class="h-8 w-auto opacity-60">
+                    <img src="images/cosmopolitan.svg" alt="Cosmopolitan logo" class="h-8 w-auto opacity-60">
+                    <img src="images/elle.svg" alt="Elle logo" class="h-8 w-auto opacity-60">
+                </div>
+            </div>
+        </div>
+
+        <!-- Services Tab -->
+        <div id="services" class="tab-content">
+            <h2 class="text-3xl font-bold text-center mb-12">Our <span class="gold-text">Signature</span> Services</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Service 1 -->
+                <div class="service-card bg-white rounded-lg overflow-hidden shadow-md relative">
+                    <img src="images/hydrafacial.png" alt="HydraFacial treatment" class="w-full h-64 object-cover">
+                    <div class="service-overlay absolute inset-0 flex items-center justify-center">
+                        <button class="btn-gold text-white px-6 py-3 rounded-full font-medium" data-tab="consultation">
+                            Book Now
+                        </button>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2">HydraFacial</h3>
+                        <p class="text-gray-600 mb-4">A revolutionary treatment that cleanses, exfoliates, extracts, and hydrates the skin with patented vortex technology.</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-lg font-medium gold-text">$199</span>
+                            <span class="text-sm text-gray-500">60 min</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Service 2 -->
+                <div class="service-card bg-white rounded-lg overflow-hidden shadow-md relative">
+                    <img src="images/laserhair.png" alt="Laser hair removal treatment" class="w-full h-64 object-cover">
+                    <div class="service-overlay absolute inset-0 flex items-center justify-center">
+                        <button class="btn-gold text-white px-6 py-3 rounded-full font-medium" data-tab="consultation">
+                            Book Now
+                        </button>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2">Laser Hair Removal</h3>
+                        <p class="text-gray-600 mb-4">Safe and effective permanent reduction of unwanted hair with our state-of-the-art laser technology.</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-lg font-medium gold-text">$150/session</span>
+                            <span class="text-sm text-gray-500">30 min</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Service 3 -->
+                <div class="service-card bg-white rounded-lg overflow-hidden shadow-md relative">
+                    <img src="images/micro.png" alt="Microdermabrasion treatment" class="w-full h-64 object-cover">
+                    <div class="service-overlay absolute inset-0 flex items-center justify-center">
+                        <button class="btn-gold text-white px-6 py-3 rounded-full font-medium" data-tab="consultation">
+                            Book Now
+                        </button>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2">Microdermabrasion</h3>
+                        <p class="text-gray-600 mb-4">A non-chemical, non-invasive procedure that uses a spray of microcrystals to remove the outermost layer of dry, dead skin cells.</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-lg font-medium gold-text">$125</span>
+                            <span class="text-sm text-gray-500">45 min</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Service 4 -->
+                <div class="service-card bg-white rounded-lg overflow-hidden shadow-md relative">
+                    <img src="images/chemical.png" alt="Chemical peel treatment" class="w-full h-64 object-cover">
+                    <div class="service-overlay absolute inset-0 flex items-center justify-center">
+                        <button class="btn-gold text-white px-6 py-3 rounded-full font-medium" data-tab="consultation">
+                            Book Now
+                        </button>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2">Chemical Peel</h3>
+                        <p class="text-gray-600 mb-4">A treatment used to improve and smooth the texture of the skin by removing its damaged outer layers.</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-lg font-medium gold-text">$175</span>
+                            <span class="text-sm text-gray-500">60 min</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Service 5 -->
+                <div class="service-card bg-white rounded-lg overflow-hidden shadow-md relative">
+                    <img src="images/botox.png" alt="Botox treatment" class="w-full h-64 object-cover">
+                    <div class="service-overlay absolute inset-0 flex items-center justify-center">
+                        <button class="btn-gold text-white px-6 py-3 rounded-full font-medium" data-tab="consultation">
+                            Book Now
+                        </button>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2">Botox</h3>
+                        <p class="text-gray-600 mb-4">A purified protein that relaxes wrinkle-causing muscles, creating a smoother, rejuvenated appearance.</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-lg font-medium gold-text">$12/unit</span>
+                            <span class="text-sm text-gray-500">30 min</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Service 6 -->
+                <div class="service-card bg-white rounded-lg overflow-hidden shadow-md relative">
+                    <img src="images/filler.png" alt="Dermal fillers treatment" class="w-full h-64 object-cover">
+                    <div class="service-overlay absolute inset-0 flex items-center justify-center">
+                        <button class="btn-gold text-white px-6 py-3 rounded-full font-medium" data-tab="consultation">
+                            Book Now
+                        </button>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2">Dermal Fillers</h3>
+                        <p class="text-gray-600 mb-4">Gel-like substances that restore volume and smoothness to the face by filling in wrinkles and folds.</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-lg font-medium gold-text">$650/syringe</span>
+                            <span class="text-sm text-gray-500">45 min</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-12 text-center">
+                <button class="border-2 gold-border text-gray-700 px-8 py-3 rounded-full font-medium" data-tab="consultation">
+                    Personalized Treatment Plan
+                </button>
+            </div>
+        </div>
+
+        <!-- Consultation Tab -->
+        <div id="consultation" class="tab-content">
+            <div class="flex flex-col lg:flex-row gap-8">
+                <div class="lg:w-1/2">
+                    <h2 class="text-3xl font-bold mb-6">Book Your <span class="gold-text">Consultation</span></h2>
+                    <p class="text-gray-600 mb-8">Begin your journey to radiant skin with our personalized consultation. Our experts will assess your skin and recommend the perfect treatments for your unique needs.</p>
+                    
+                    <div class="bg-white p-6 rounded-lg shadow-md mb-8">
+                        <h3 class="text-xl font-bold mb-4">Skin Concern Quiz</h3>
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-gray-700 mb-2">What's your primary skin concern?</label>
+                                <select class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-200">
+                                    <option value="">Select your concern</option>
+                                    <option value="aging">Aging/Wrinkles</option>
+                                    <option value="acne">Acne/Breakouts</option>
+                                    <option value="dryness">Dryness/Dehydration</option>
+                                    <option value="pigmentation">Pigmentation/Discoloration</option>
+                                    <option value="sensitivity">Sensitivity/Redness</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                            
+                            <div>
+                                <label class="block text-gray-700 mb-2">What's your skin type?</label>
+                                <div class="grid grid-cols-2 gap-2" id="skin-type-buttons">
+                                    <button class="skin-type-btn border px-4 py-2 rounded-lg hover:bg-gray-50">Dry</button>
+                                    <button class="skin-type-btn border px-4 py-2 rounded-lg hover:bg-gray-50">Oily</button>
+                                    <button class="skin-type-btn border px-4 py-2 rounded-lg hover:bg-gray-50">Combination</button>
+                                    <button class="skin-type-btn border px-4 py-2 rounded-lg hover:bg-gray-50">Normal</button>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <label class="block text-gray-700 mb-2">Have you had professional treatments before?</label>
+                                <div class="flex space-x-4">
+                                    <label class="flex items-center">
+                                        <input type="radio" name="experience" class="mr-2"> Yes
+                                    </label>
+                                    <label class="flex items-center">
+                                        <input type="radio" name="experience" class="mr-2"> No
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white p-6 rounded-lg shadow-md">
+                        <h3 class="text-xl font-bold mb-4">AI Skin Analysis</h3>
+                        <p class="text-gray-600 mb-4">Upload a selfie for our AI to analyze your skin and recommend treatments.</p>
+                        
+                        <div class="skin-analysis-preview rounded-lg p-4 mb-4 text-center">
+                            <i class="fas fa-camera text-4xl text-gray-300 mb-2"></i>
+                            <p class="text-gray-500">Upload a clear, well-lit photo of your face</p>
+                            <input type="file" id="skin-upload" class="hidden" accept="image/*">
+                            <button onclick="document.getElementById('skin-upload').click()" class="btn-gold text-white px-4 py-2 rounded-full text-sm mt-2">
+                                Upload Photo
+                            </button>
+                        </div>
+                        
+                        <div id="analysis-results" class="hidden">
+                            <h4 class="font-bold mb-2">Analysis Results:</h4>
+                            <div class="space-y-2">
+                                <div class="flex justify-between">
+                                    <span>Hydration:</span>
+                                    <span class="font-medium">72%</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span>Pores:</span>
+                                    <span class="font-medium">Visible</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span>Fine Lines:</span>
+                                    <span class="font-medium">Moderate</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span>Recommended Treatments:</span>
+                                    <span class="font-medium gold-text">HydraFacial, Microcurrent</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="lg:w-1/2">
+                    <div class="bg-white p-6 rounded-lg shadow-md sticky top-4">
+                        <h3 class="text-xl font-bold mb-6">Available Appointments</h3>
+                        
+                        <div class="mb-6">
+                            <label class="block text-gray-700 mb-2">Select Date</label>
+                            <div class="grid grid-cols-7 gap-1 mb-2">
+                                <div class="text-center text-sm font-medium py-1">S</div>
+                                <div class="text-center text-sm font-medium py-1">M</div>
+                                <div class="text-center text-sm font-medium py-1">T</div>
+                                <div class="text-center text-sm font-medium py-1">W</div>
+                                <div class="text-center text-sm font-medium py-1">T</div>
+                                <div class="text-center text-sm font-medium py-1">F</div>
+                                <div class="text-center text-sm font-medium py-1">S</div>
+                            </div>
+                            <div class="grid grid-cols-7 gap-1">
+                                <div class="text-center py-2 text-gray-400">28</div>
+                                <div class="text-center py-2 text-gray-400">29</div>
+                                <div class="text-center py-2 text-gray-400">30</div>
+                                <div class="text-center py-2 text-gray-400">31</div>
+                                <button class="date-btn text-center py-2">1</button>
+                                <button class="date-btn text-center py-2">2</button>
+                                <button class="date-btn text-center py-2">3</button>
+                            </div>
+                            <div class="grid grid-cols-7 gap-1 mt-1">
+                                <button class="date-btn text-center py-2">4</button>
+                                <button class="date-btn text-center py-2">5</button>
+                                <button class="date-btn text-center py-2">6</button>
+                                <button class="date-btn text-center py-2">7</button>
+                                <button class="date-btn text-center py-2">8</button>
+                                <button class="date-btn text-center py-2">9</button>
+                                <button class="date-btn text-center py-2">10</button>
+                            </div>
+                            <div class="grid grid-cols-7 gap-1 mt-1">
+                                <button class="date-btn text-center py-2">11</button>
+                                <button class="date-btn text-center py-2">12</button>
+                                <button class="date-btn text-center py-2">13</button>
+                                <button class="date-btn text-center py-2">14</button>
+                                <button class="date-btn text-center py-2">15</button>
+                                <button class="date-btn text-center py-2">16</button>
+                                <button class="date-btn text-center py-2">17</button>
+                            </div>
+                            <div class="grid grid-cols-7 gap-1 mt-1">
+                                <button class="date-btn text-center py-2">18</button>
+                                <button class="date-btn text-center py-2">19</button>
+                                <button class="date-btn text-center py-2">20</button>
+                                <button class="date-btn text-center py-2">21</button>
+                                <button class="date-btn text-center py-2">22</button>
+                                <button class="date-btn text-center py-2">23</button>
+                                <button class="date-btn text-center py-2">24</button>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <label class="block text-gray-700 mb-2">Available Times</label>
+                            <div class="grid grid-cols-3 gap-2" id="time-buttons">
+                                <button class="time-btn border px-3 py-2 rounded-lg hover:bg-gray-50">9:00 AM</button>
+                                <button class="time-btn border px-3 py-2 rounded-lg hover:bg-gray-50">10:30 AM</button>
+                                <button class="time-btn border px-3 py-2 rounded-lg hover:bg-gray-50">12:00 PM</button>
+                                <button class="time-btn border px-3 py-2 rounded-lg hover:bg-gray-50">1:30 PM</button>
+                                <button class="time-btn border px-3 py-2 rounded-lg hover:bg-gray-50">3:00 PM</button>
+                                <button class="time-btn border px-3 py-2 rounded-lg hover:bg-gray-50">4:30 PM</button>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <label class="block text-gray-700 mb-2">Select Specialist</label>
+                            <select class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-200">
+                                <option value="">Any available specialist</option>
+                                <option value="dr-smith">Dr. Emily Smith</option>
+                                <option value="dr-johnson">Dr. Sarah Johnson</option>
+                                <option value="dr-lee">Dr. Michelle Lee</option>
+                            </select>
+                        </div>
+                        
+                        <button id="confirm-booking" class="btn-gold text-white w-full py-3 rounded-full font-medium">
+                            Confirm Booking
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Testimonials Tab -->
+        <div id="testimonials" class="tab-content">
+            <h2 class="text-3xl font-bold text-center mb-12">Client <span class="gold-text">Transformations</span></h2>
+            
+            <div class="relative">
+                <div class="testimonial-carousel flex overflow-x-auto pb-8 scrollbar-hide">
+                    <!-- Testimonial 1 -->
+                    <div class="testimonial-card flex-shrink-0 w-80 bg-white rounded-lg shadow-md mx-4 p-6">
+                        <div class="flex items-center mb-4">
+                            <div class="w-12 h-12 rounded-full bg-gray-300 overflow-hidden mr-3">
+                                <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=100&q=80" alt="Jessica R." class="w-full h-full object-cover">
+                            </div>
+                            <div>
+                                <h4 class="font-bold">Jessica R.</h4>
+                                <div class="flex gold-text">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 mb-4">"After just three HydraFacial sessions, my skin has never looked better. The redness has reduced significantly and my complexion is so even!"</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-sm text-gray-500">Posted 2 weeks ago</span>
+                            <a href="#" class="text-sm text-blue-500">@jessica_r</a>
+                        </div>
+                    </div>
+                    
+                    <!-- Testimonial 2 -->
+                    <div class="testimonial-card flex-shrink-0 w-80 bg-white rounded-lg shadow-md mx-4 p-6">
+                        <div class="flex items-center mb-4">
+                            <div class="w-12 h-12 rounded-full bg-gray-300 overflow-hidden mr-3">
+                                <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=100&q=80" alt="Amanda T." class="w-full h-full object-cover">
+                            </div>
+                            <div>
+                                <h4 class="font-bold">Amanda T.</h4>
+                                <div class="flex gold-text">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 mb-4">"The laser hair removal was virtually painless and so effective! I'm thrilled with the results and the staff made me feel completely comfortable."</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-sm text-gray-500">Posted 1 month ago</span>
+                            <a href="#" class="text-sm text-blue-500">@amandat</a>
+                        </div>
+                    </div>
+                    
+                    <!-- Testimonial 3 -->
+                    <div class="testimonial-card flex-shrink-0 w-80 bg-white rounded-lg shadow-md mx-4 p-6">
+                        <div class="flex items-center mb-4">
+                            <div class="w-12 h-12 rounded-full bg-gray-300 overflow-hidden mr-3">
+                                <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=100&q=80" alt="Sophia L." class="w-full h-full object-cover">
+                            </div>
+                            <div>
+                                <h4 class="font-bold">Sophia L.</h4>
+                                <div class="flex gold-text">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star-half-alt"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 mb-4">"Dr. Smith's expertise with fillers is unmatched. She gave me such a natural, refreshed look without any of that 'overdone' appearance."</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-sm text-gray-500">Posted 3 weeks ago</span>
+                            <a href="#" class="text-sm text-blue-500">@sophialovesbeauty</a>
+                        </div>
+                    </div>
+                    
+                    <!-- Testimonial 4 -->
+                    <div class="testimonial-card flex-shrink-0 w-80 bg-white rounded-lg shadow-md mx-4 p-6">
+                        <div class="flex items-center mb-4">
+                            <div class="w-12 h-12 rounded-full bg-gray-300 overflow-hidden mr-3">
+                                <img src="https://images.unsplash.com/photo-1554151228-14d9def656e4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=100&q=80" alt="Rachel G." class="w-full h-full object-cover">
+                            </div>
+                            <div>
+                                <h4 class="font-bold">Rachel G.</h4>
+                                <div class="flex gold-text">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 mb-4">"The chemical peel transformed my acne scars dramatically. The aftercare instructions were so thorough and my skin healed beautifully."</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-sm text-gray-500">Posted 1 week ago</span>
+                            <a href="#" class="text-sm text-blue-500">@rachelglow</a>
+                        </div>
+                    </div>
+                    
+                    <!-- Testimonial 5 -->
+                    <div class="testimonial-card flex-shrink-0 w-80 bg-white rounded-lg shadow-md mx-4 p-6">
+                        <div class="flex items-center mb-4">
+                            <div class="w-12 h-12 rounded-full bg-gray-300 overflow-hidden mr-3">
+                                <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=100&q=80" alt="Megan K." class="w-full h-full object-cover">
+                            </div>
+                            <div>
+                                <h4 class="font-bold">Megan K.</h4>
+                                <div class="flex gold-text">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 mb-4">"I was nervous about Botox but the consultation put me at ease. The results are perfect - I look rested but still completely like myself."</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-sm text-gray-500">Posted 2 months ago</span>
+                            <a href="#" class="text-sm text-blue-500">@megank</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <button class="testimonial-nav absolute left-0 top-1/2 transform -translate-y-1/2 bg-white p-2 rounded-full shadow-md ml-2">
+                    <i class="fas fa-chevron-left text-gray-600"></i>
+                </button>
+                <button class="testimonial-nav absolute right-0 top-1/2 transform -translate-y-1/2 bg-white p-2 rounded-full shadow-md mr-2">
+                    <i class="fas fa-chevron-right text-gray-600"></i>
+                </button>
+            </div>
+            
+            <div class="mt-16">
+                <h3 class="text-2xl font-bold text-center mb-8">Before & After</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <div class="relative group overflow-hidden rounded-lg">
+                        <img src="images/before1.PNG" alt="Before chemical peel treatment" class="w-full h-64 object-cover">
+                        <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                            <span class="text-white font-bold">Before</span>
+                        </div>
+                    </div>
+                    <div class="relative group overflow-hidden rounded-lg">
+                        <img src="images/after1.png" alt="After chemical peel treatment" class="w-full h-64 object-cover">
+                        <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                            <span class="text-white font-bold">After</span>
+                        </div>
+                    </div>
+                    <div class="relative group overflow-hidden rounded-lg">
+                        <img src="images/before2.PNG" alt="Before HydraFacial treatment" class="w-full h-64 object-cover">
+                        <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                            <span class="text-white font-bold">Before</span>
+                        </div>
+                    </div>
+                    <div class="relative group overflow-hidden rounded-lg">
+                        <img src="images/after2.PNG" alt="After HydraFacial treatment" class="w-full h-64 object-cover">
+                        <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                            <span class="text-white font-bold">After</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-12 text-center">
+                <button class="btn-gold text-white px-8 py-3 rounded-full font-medium" data-tab="consultation">
+                    Start Your Transformation
+                </button>
+            </div>
+        </div>
+
+        <!-- Contact Tab -->
+        <div id="contact" class="tab-content">
+            <div class="flex flex-col lg:flex-row gap-8">
+                <div class="lg:w-1/2">
+                    <h2 class="text-3xl font-bold mb-6">Get In <span class="gold-text">Touch</span></h2>
+                    <p class="text-gray-600 mb-8">Have questions or ready to begin your skincare journey? Our team is here to help guide you every step of the way.</p>
+                    
+                    <div class="bg-white p-6 rounded-lg shadow-md mb-8">
+                        <h3 class="text-xl font-bold mb-4">Contact Information</h3>
+                        <div class="space-y-4">
+                            <div class="flex items-start">
+                                <i class="fas fa-map-marker-alt gold-text mt-1 mr-3"></i>
+                                <div>
+                                    <h4 class="font-medium">Location</h4>
+                                    <p class="text-gray-600">123 Beauty Avenue, Suite 450<br>New York, NY 10001</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <i class="fas fa-phone gold-text mt-1 mr-3"></i>
+                                <div>
+                                    <h4 class="font-medium">Phone</h4>
+                                    <p class="text-gray-600">(212) 555-1234</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <i class="fas fa-envelope gold-text mt-1 mr-3"></i>
+                                <div>
+                                    <h4 class="font-medium">Email</h4>
+                                    <p class="text-gray-600">hello@lumierebeauty.com</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <i class="fas fa-clock gold-text mt-1 mr-3"></i>
+                                <div>
+                                    <h4 class="font-medium">Hours</h4>
+                                    <p class="text-gray-600">Monday - Friday: 9am - 7pm<br>Saturday: 10am - 5pm<br>Sunday: Closed</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white p-6 rounded-lg shadow-md">
+                        <h3 class="text-xl font-bold mb-4">Follow Us</h3>
+                        <p class="text-gray-600 mb-4">Join our community for skincare tips, special offers, and behind-the-scenes looks at our treatments.</p>
+                        <div class="flex space-x-4">
+                            <a href="#" class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center hover:bg-gray-200">
+                                <i class="fab fa-instagram gold-text"></i>
+                            </a>
+                            <a href="#" class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center hover:bg-gray-200">
+                                <i class="fab fa-facebook-f gold-text"></i>
+                            </a>
+                            <a href="#" class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center hover:bg-gray-200">
+                                <i class="fab fa-tiktok gold-text"></i>
+                            </a>
+                            <a href="#" class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center hover:bg-gray-200">
+                                <i class="fab fa-youtube gold-text"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="lg:w-1/2">
+                    <div class="bg-white p-6 rounded-lg shadow-md sticky top-4">
+                        <h3 class="text-xl font-bold mb-6">Send Us a Message</h3>
+                        
+                        <form id="contact-form">
+                            <div class="mb-4">
+                                <label for="name" class="block text-gray-700 mb-2">Your Name</label>
+                                <input type="text" id="name" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-200" required>
+                                <p class="text-red-500 text-sm mt-1 hidden">Please enter your name</p>
+                            </div>
+                            
+                            <div class="mb-4">
+                                <label for="email" class="block text-gray-700 mb-2">Email Address</label>
+                                <input type="email" id="email" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-200" required>
+                                <p class="text-red-500 text-sm mt-1 hidden">Please enter a valid email</p>
+                            </div>
+                            
+                            <div class="mb-4">
+                                <label for="phone" class="block text-gray-700 mb-2">Phone Number</label>
+                                <input type="tel" id="phone" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-200">
+                            </div>
+                            
+                            <div class="mb-4">
+                                <label for="subject" class="block text-gray-700 mb-2">Subject</label>
+                                <select id="subject" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-200">
+                                    <option value="">Select a subject</option>
+                                    <option value="general">General Inquiry</option>
+                                    <option value="booking">Booking Question</option>
+                                    <option value="treatment">Treatment Information</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                            
+                            <div class="mb-4">
+                                <label for="message" class="block text-gray-700 mb-2">Your Message</label>
+                                <textarea id="message" rows="4" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-200" required></textarea>
+                                <p class="text-red-500 text-sm mt-1 hidden">Please enter your message</p>
+                            </div>
+                            
+                            <button type="submit" class="btn-gold text-white w-full py-3 rounded-full font-medium">
+                                Send Message
+                            </button>
+                        </form>
+                        
+                        <div class="mt-6 text-center">
+                            <p class="text-gray-600 mb-3">Prefer to chat instantly?</p>
+                            <button class="border-2 border-green-500 text-green-600 px-6 py-2 rounded-full font-medium flex items-center mx-auto">
+                                <i class="fab fa-whatsapp mr-2"></i> WhatsApp Us
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-100 py-8 mt-12" style="background-color: var(--secondary-cream);">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-4 md:mb-0">
+                    <div class="flex items-center">
+                        <div class="w-10 h-10 rounded-full bg-gradient-to-br from-var(--accent-gold) to-var(--primary-mauve) flex items-center justify-center mr-2">
+                            <span class="text-white font-bold">L</span>
+                        </div>
+                        <h2 class="text-xl font-bold">Lumière <span class="gold-text">Beauty</span></h2>
+                    </div>
+                    <p class="text-gray-600 mt-2">Reveal your natural radiance.</p>
+                </div>
+                
+                <div class="flex space-x-6">
+                    <a href="#" class="text-gray-600 hover:text-gray-800">Privacy Policy</a>
+                    <a href="#" class="text-gray-600 hover:text-gray-800">Terms of Service</a>
+                    <a href="#" class="text-gray-600 hover:text-gray-800">Accessibility</a>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-200 mt-6 pt-6 text-center text-gray-500 text-sm">
+                <p>© 2018 Lumière Beauty. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Tab Switching Functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const tabs = document.querySelectorAll('[data-tab]');
+            const tabContents = document.querySelectorAll('.tab-content');
+            
+            tabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    const targetTab = this.getAttribute('data-tab');
+                    
+                    // Update active tab
+                    tabs.forEach(t => {
+                        t.classList.remove('active');
+                        if (t === this) t.classList.add('active');
+                    });
+                    
+                    // Update active tab content
+                    tabContents.forEach(content => {
+                        content.classList.remove('active');
+                        if (content.id === targetTab) content.classList.add('active');
+                    });
+                    
+                    // Close mobile menu if open
+                    const mobileNav = document.getElementById('mobile-nav');
+                    if (mobileNav.classList.contains('active')) {
+                        mobileNav.classList.remove('active');
+                    }
+                });
+            });
+            
+            // Mobile Menu Toggle
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileNav = document.getElementById('mobile-nav');
+            
+            mobileMenuButton.addEventListener('click', function() {
+                mobileNav.classList.toggle('active');
+            });
+            
+            // Testimonial Carousel Navigation
+            const carousel = document.querySelector('.testimonial-carousel');
+            const prevButton = document.querySelector('.testimonial-nav:first-child');
+            const nextButton = document.querySelector('.testimonial-nav:last-child');
+            
+            nextButton.addEventListener('click', function() {
+                carousel.scrollBy({ left: 300, behavior: 'smooth' });
+            });
+            
+            prevButton.addEventListener('click', function() {
+                carousel.scrollBy({ left: -300, behavior: 'smooth' });
+            });
+            
+            // Skin Analysis Upload
+            const skinUpload = document.getElementById('skin-upload');
+            const analysisResults = document.getElementById('analysis-results');
+            
+            skinUpload.addEventListener('change', function(e) {
+                if (e.target.files.length > 0) {
+                    const file = e.target.files[0];
+                    const reader = new FileReader();
+                    
+                    reader.onload = function(event) {
+                        const preview = document.querySelector('.skin-analysis-preview');
+                        preview.innerHTML = `
+                            <img src="${event.target.result}" alt="Uploaded skin analysis photo" class="w-full h-full object-cover rounded-lg">
+                        `;
+                        
+                        // Show mock analysis results after a delay
+                        setTimeout(() => {
+                            analysisResults.classList.remove('hidden');
+                        }, 1500);
+                    };
+                    
+                    reader.readAsDataURL(file);
+                }
+            });
+            
+            // Skin Type Selection - Fixed
+            const skinTypeButtons = document.querySelectorAll('.skin-type-btn');
+            skinTypeButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    skinTypeButtons.forEach(btn => {
+                        btn.classList.remove('selected');
+                    });
+                    this.classList.add('selected');
+                });
+            });
+            
+            // Date Selection - Fixed
+            const dateButtons = document.querySelectorAll('.date-btn');
+            dateButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    dateButtons.forEach(btn => {
+                        btn.classList.remove('selected');
+                    });
+                    this.classList.add('selected');
+                    updateAvailableTimes(this.textContent);
+                });
+            });
+            
+            // Time Selection
+            const timeButtons = document.querySelectorAll('.time-btn');
+            timeButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    timeButtons.forEach(btn => btn.classList.remove('selected'));
+                    this.classList.add('selected');
+                });
+            });
+            
+            // Function to update available times (mock implementation)
+            function updateAvailableTimes(selectedDate) {
+                const allTimeButtons = document.querySelectorAll('.time-btn');
+                
+                // First reset all times
+                allTimeButtons.forEach(btn => {
+                    btn.style.display = 'block';
+                    btn.classList.remove('selected');
+                });
+                
+                // Simulate different availability based on date
+                if (selectedDate === '13') {
+                    allTimeButtons[0].style.display = 'none';
+                    allTimeButtons[3].style.display = 'none';
+                } else if (selectedDate === '15') {
+                    allTimeButtons[1].style.display = 'none';
+                    allTimeButtons[2].style.display = 'none';
+                    allTimeButtons[5].style.display = 'none';
+                }
+            }
+            
+            // Booking Confirmation
+            const confirmBooking = document.getElementById('confirm-booking');
+            
+            confirmBooking.addEventListener('click', function() {
+                const selectedDate = document.querySelector('.date-btn.selected');
+                const selectedTime = document.querySelector('.time-btn.selected');
+                
+                if (!selectedDate || !selectedTime) {
+                    alert('Please select both a date and time for your appointment.');
+                    return;
+                }
+                
+                // Create confetti effect
+                for (let i = 0; i < 50; i++) {
+                    createConfetti();
+                }
+                
+                // Show success message
+                const bookingWidget = this.closest('.bg-white');
+                bookingWidget.innerHTML = `
+                    <div class="text-center py-8">
+                        <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-check text-3xl text-green-500"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2">Booking Confirmed!</h3>
+                        <p class="text-gray-600 mb-4">Your consultation on ${selectedDate.textContent} at ${selectedTime.textContent} is confirmed.</p>
+                        <p class="text-gray-600 mb-6">We've sent the details to your email. See you soon!</p>
+                        <button class="border-2 gold-border text-gray-700 px-6 py-2 rounded-full font-medium" data-tab="home">
+                            Back to Home
+                        </button>
+                    </div>
+                `;
+            });
+            
+            function createConfetti() {
+                const confetti = document.createElement('div');
+                confetti.classList.add('confetti');
+                confetti.style.left = Math.random() * 100 + 'vw';
+                const size = Math.random() * 10 + 5;
+                confetti.style.width = size + 'px';
+                confetti.style.height = size + 'px';
+                
+                if (Math.random() > 0.5) {
+                    confetti.style.borderRadius = '50%';
+                }
+                
+                const hue = 40 + Math.random() * 20;
+                const saturation = 70 + Math.random() * 20;
+                const lightness = 50 + Math.random() * 20;
+                confetti.style.backgroundColor = `hsl(${hue}, ${saturation}%, ${lightness}%)`;
+                
+                const duration = 2 + Math.random() * 3;
+                confetti.style.animationDuration = duration + 's';
+                
+                document.body.appendChild(confetti);
+                
+                setTimeout(() => {
+                    confetti.remove();
+                }, duration * 1000);
+            }
+            
+            // Form Validation
+            const contactForm = document.getElementById('contact-form');
+            
+            contactForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                let isValid = true;
+                
+                // Validate name
+                const name = document.getElementById('name');
+                const nameError = name.nextElementSibling;
+                if (name.value.trim() === '') {
+                    nameError.classList.remove('hidden');
+                    isValid = false;
+                } else {
+                    nameError.classList.add('hidden');
+                }
+                
+                // Validate email
+                const email = document.getElementById('email');
+                const emailError = email.nextElementSibling;
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailRegex.test(email.value)) {
+                    emailError.classList.remove('hidden');
+                    isValid = false;
+                } else {
+                    emailError.classList.add('hidden');
+                }
+                
+                // Validate message
+                const message = document.getElementById('message');
+                const messageError = message.nextElementSibling;
+                if (message.value.trim() === '') {
+                    messageError.classList.remove('hidden');
+                    isValid = false;
+                } else {
+                    messageError.classList.add('hidden');
+                }
+                
+                if (isValid) {
+                    contactForm.innerHTML = `
+                        <div class="text-center py-8">
+                            <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <i class="fas fa-check text-3xl text-green-500"></i>
+                            </div>
+                            <h3 class="text-xl font-bold mb-2">Message Sent!</h3>
+                            <p class="text-gray-600 mb-6">Thank you for reaching out. Our team will respond within 24 hours.</p>
+                            <button class="border-2 gold-border text-gray-700 px-6 py-2 rounded-full font-medium" data-tab="home">
+                                Back to Home
+                            </button>
+                        </div>
+                    `;
+                }
+            });
+        });
+    </script>
+</body>
+</html>
